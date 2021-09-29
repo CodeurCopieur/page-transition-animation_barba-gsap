@@ -37,5 +37,34 @@ mainAnimation = () => {
    })
 }
 
-pageTransition()
-mainAnimation()
+delay = (n) => {
+
+  n = n || 2000;
+
+  return new Promise( done => {
+    setTimeout(() => {
+      done();
+    }, n)
+  })
+}
+
+
+barba.init({
+  sync: true,
+  transitions: [
+    {
+      async leave(data){
+        const done = this.async();
+        pageTransition();
+        tl = gsap.timeline();
+        await delay(1500);
+        done();
+      },
+      async enter(data){
+        mainAnimation();
+      },
+      async once(data){
+        mainAnimation();
+      }
+    }]
+});
